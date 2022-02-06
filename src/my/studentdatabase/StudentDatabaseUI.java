@@ -22,10 +22,14 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
     private JPanel contentPane;
     private JTextField emplidTextField;
     private JButton btnSearch;
+    private JButton btnShowSchools;
+    private JButton btnShowDepartments;
     private JScrollPane scrollPane;
     private JTable table;
     
     private StudentDAO studentDAO;
+    private SchoolDAO schoolDAO;
+    private DepartmentDAO departmentDAO;
     
 
     /**
@@ -39,6 +43,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
         try {
             
             studentDAO = new StudentDAO();
+            schoolDAO = new SchoolDAO();
+            departmentDAO = new DepartmentDAO();
             
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
@@ -98,7 +104,63 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
             }
         });
         
+        btnShowSchools = new JButton("Show All Schools");
+        btnShowSchools.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                // Call School DAO and get all schools
+                // Print out schools
+                
+                try {
+                    
+                    List<School> schools = null;
+                    System.out.println("List made");
+                    
+                    System.out.println("Getting schools");
+                    schools = schoolDAO.getAllSchools();
+                    System.out.println("Got schools");
+                    
+                    // Create the model and update the "table"
+                    SchoolTableModel model = new SchoolTableModel(schools);
+                    System.out.println("Model created");
+                    
+                    table.setModel(model);
+                    System.out.println("Model set");
+                    
+                } catch (Exception exc) {
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+                } 
+            }
+            
+        });
+        
+        btnShowDepartments = new JButton("Show All Departments");
+        btnShowDepartments.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                // Call Department DAO and get all departments
+                // Print out departments
+                
+                try {
+                    
+                    List<Department> departments = null;
+                    
+                    departments = departmentDAO.getAllDepartments();
+                    
+                    // Create the model and update the "table"
+                    DepartmentTableModel model = new DepartmentTableModel(departments);
+                    
+                    table.setModel(model);
+                    
+                } catch (Exception exc) {
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
         panel.add(btnSearch);
+        panel.add(btnShowSchools);
+        panel.add(btnShowDepartments);
         
         scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);

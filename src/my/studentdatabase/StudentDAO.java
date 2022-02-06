@@ -12,17 +12,17 @@ import java.sql.*;
  *
  * @author Victor Nestor
  */
-public class StudentDAO {
+public class StudentDAO extends javax.swing.JFrame {
     
     private Connection conn;
     
-    public StudentDAO() throws Exception{
+    public StudentDAO() throws Exception {
         
         // Database properties
         String dburl = "jdbc:derby://localhost:1527/StudentDB";
         conn = DriverManager.getConnection(dburl);
         
-        System.out.println("DB connection successful to: " + dburl);   
+        System.out.println("Student DAO: DB connection successful to: " + dburl);   
     }
     
     public List<Student> getAllStudents() throws Exception {
@@ -109,11 +109,11 @@ public class StudentDAO {
         close(null, stmt, rs);
     }
     
-    public static void main(String[] args) throws Exception {
-        StudentDAO dao = new StudentDAO();
-        System.out.println(dao.searchStudents(596834));
-        
-        System.out.println(dao.getAllStudents());
-    }
+//    public static void main(String[] args) throws Exception {
+//        StudentDAO dao = new StudentDAO();
+//        System.out.println(dao.searchStudents(596834));
+//        
+//        System.out.println(dao.getAllStudents());
+//    }
     
 }
