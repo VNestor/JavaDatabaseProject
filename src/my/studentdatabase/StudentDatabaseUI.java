@@ -5,17 +5,110 @@
  */
 package my.studentdatabase;
 
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.List;
+import javax.swing.border.EmptyBorder;
+
+
+
 /**
  *
- * @author Vic Doom
+ * @author Victor Nestor
  */
 public class StudentDatabaseUI extends javax.swing.JFrame {
+    
+    private JPanel contentPane;
+    private JTextField emplidTextField;
+    private JButton btnSearch;
+    private JScrollPane scrollPane;
+    private JTable table;
+    
+    private StudentDAO studentDAO;
+    
 
     /**
      * Creates new form StudentDatabaseUI
      */
     public StudentDatabaseUI() {
         initComponents();
+        
+        // Create the DAO
+        
+        try {
+            
+            studentDAO = new StudentDAO();
+            
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        setTitle("Student Database");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100,650,300);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5,5,5,5));
+        contentPane.setLayout(new BorderLayout(0,0));
+        setContentPane(contentPane);
+        
+        JPanel panel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+        flowLayout.setAlignment(FlowLayout.LEFT);
+        contentPane.add(panel, BorderLayout.NORTH);
+        
+        JLabel labelEnterEMPLID = new JLabel("Enter EMPLID");
+        panel.add(labelEnterEMPLID);
+        
+        emplidTextField = new JTextField();
+        panel.add(emplidTextField);
+        emplidTextField.setColumns(10);
+        
+        btnSearch = new JButton("Search");
+        btnSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                // Get EMPLID from text field.
+                // Call DAO and get corresponding student.
+                // If emplid is empty, get all students.
+                // Print out students
+                
+                try {
+                    
+                    
+                    int emplid = Integer.parseInt(emplidTextField.getText());
+                    
+                    List<Student> students = null;
+                    
+                    if (emplid != 0 && emplid >= 111111 && emplid <= 999999) {
+                            students = studentDAO.searchStudents(emplid);
+                    } else {
+                        students = studentDAO.getAllStudents();
+                    }
+                    
+                    // Create the model and update the "table"
+                    StudentTableModel model = new StudentTableModel(students);
+                    
+                    table.setModel(model);
+                    
+                    
+                } catch (Exception exc) {
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: Please enter valid EMPLID or 0 to show all students.", "\nError: ", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+        panel.add(btnSearch);
+        
+        scrollPane = new JScrollPane();
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+        
+        table = new JTable();
+        scrollPane.setViewportView(table);
+        
+        
+        
+        
     }
 
     /**
@@ -73,7 +166,11 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentDatabaseUI().setVisible(true);
+                try {
+                    new StudentDatabaseUI().setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
