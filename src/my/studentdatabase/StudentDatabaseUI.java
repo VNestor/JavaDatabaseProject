@@ -30,6 +30,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
     private StudentDAO studentDAO;
     private SchoolDAO schoolDAO;
     private DepartmentDAO departmentDAO;
+    private JPanel panel_1;
+    private JButton btnAddStudent;
     
 
     /**
@@ -52,7 +54,7 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
         
         setTitle("Student Database");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100,650,300);
+        setBounds(100, 100,850,450);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5,5,5,5));
         contentPane.setLayout(new BorderLayout(0,0));
@@ -158,6 +160,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
             }
         });
         
+        
+        
         panel.add(btnSearch);
         panel.add(btnShowSchools);
         panel.add(btnShowDepartments);
@@ -168,10 +172,41 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
         table = new JTable();
         scrollPane.setViewportView(table);
         
+        panel_1 = new JPanel();
+        contentPane.add(panel_1, BorderLayout.SOUTH);
+        
+        btnAddStudent = new JButton("Add Student");
+        btnAddStudent.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		// Create Dialog
+        		AddStudentDialog dialog = new AddStudentDialog(StudentDatabaseUI.this, studentDAO);
+        		
+        		// Show Dialog
+        		dialog.setVisible(true);
+        	}
+        });
+        panel_1.add(btnAddStudent);
+        
         
         
         
     }
+    
+    public void refreshStudentsView() {
+		try {
+			
+			List<Student> students = studentDAO.getAllStudents();
+			
+			// Create the model and update the "table".
+			StudentTableModel model = new StudentTableModel(students);
+			
+			table.setModel(model);
+			
+		} catch (Exception exc) {
+			JOptionPane.showMessageDialog(this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -236,6 +271,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
             }
         });
     }
+
+	
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

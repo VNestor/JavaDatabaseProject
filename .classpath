@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="dist/lib/derby.jar"/>
+	<classpathentry kind="lib" path="dist/lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="dist/lib/derbynet.jar"/>
+	<classpathentry kind="lib" path="dist/StudentDatabase.jar"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

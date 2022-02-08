@@ -90,6 +90,34 @@ public class StudentDAO extends javax.swing.JFrame {
         
     }
     
+        
+    public void addStudent(Student theStudent) throws Exception {
+        PreparedStatement stmt = null;
+        
+        try {
+            // Prepare the statement
+            stmt = conn.prepareStatement("INSERT INTO STUDENTS "
+                    + "(EMPLID, NAME, DEPTNO, TRANSFER, STATUS, CREDITS, GPA) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+            
+            // Set params
+            stmt.setInt(1, theStudent.getEmplid());
+            stmt.setString(2, theStudent.getName());
+            stmt.setInt(3, theStudent.getDept());
+            stmt.setInt(4, theStudent.getTransfer());
+            stmt.setString(5, theStudent.getStatus());
+            stmt.setInt(6, theStudent.getCredits());
+            stmt.setDouble(7, theStudent.getGPA());
+            
+            // Execute SQL
+            stmt.executeUpdate();
+        }
+        finally {
+            close(stmt, null);
+        }
+        
+    }
+    
     private static void close(Connection conn, Statement stmt, ResultSet rs) throws SQLException {
         
         if (rs != null) {
