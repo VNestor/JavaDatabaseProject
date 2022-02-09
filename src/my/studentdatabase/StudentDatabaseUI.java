@@ -90,10 +90,13 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
                     
                     List<Student> students = null;
                     
-                    if (emplid != 0 && emplid >= 111111 && emplid <= 999999) {
+                    if (emplid >= 111111 && emplid <= 999999) {
                             students = studentDAO.searchStudents(emplid);
-                    } else {
+                    } else if (emplid == 0 ) {
                         students = studentDAO.getAllStudents();
+                    } else {
+                        JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: Please enter valid EMPLID or 0 to show all students.", 
+                    		"An error occured!", JOptionPane.ERROR_MESSAGE);
                     }
                     
                     // Create the model and update the "table"
