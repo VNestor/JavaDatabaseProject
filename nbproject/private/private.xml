@@ -5,10 +5,11 @@
         <group>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/StudentDatabaseUI.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/Department.java</file>
-            <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/AddStudentDialog.java</file>
+            <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/SchoolTableModel.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/StudentDAO.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/Student.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/StudentTableModel.java</file>
+            <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/StudentDialog.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/School.java</file>
             <file>file:/C:/Users/Vic%20Doom/Desktop/Git/StudentDatabase/StudentDatabase/src/my/studentdatabase/SchoolDAO.java</file>
         </group>

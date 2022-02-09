@@ -74,6 +74,50 @@ public class StudentDAO extends javax.swing.JFrame {
         }   
     }
     
+    public void updateStudent(Student theStudent) throws SQLException {
+    	PreparedStatement stmt = null;
+    	
+    	try {
+    		stmt = conn.prepareStatement("UPDATE STUDENTS SET "
+    	
+    				+ "NAME = ?, DEPTNO = ?, TRANSFER = ?, STATUS = ?, CREDITS = ?, GPA = ? " 
+    				+ "WHERE EMPLID = ?");
+    		
+    		// Set params
+            stmt.setString(1, theStudent.getName());
+            stmt.setInt(2, theStudent.getDept());
+            stmt.setInt(3, theStudent.getTransfer());
+            stmt.setString(4, theStudent.getStatus());
+            stmt.setInt(5, theStudent.getCredits());
+            stmt.setDouble(6, theStudent.getGPA());
+            stmt.setInt(7, theStudent.getEmplid());
+            
+            // Execute SQL
+            stmt.executeUpdate();
+    	} 
+    	finally {
+    		close(stmt);
+    	}   	
+    }
+    
+    public void deleteStudent(int emplid) throws SQLException {
+    	PreparedStatement stmt = null;
+    	
+    	try {
+    		// Prepare statement
+    		stmt = conn.prepareStatement("DELETE FROM STUDENTS WHERE EMPLID = ?");
+    		
+    		// Set param
+    		stmt.setInt(1,  emplid);
+    		
+    		// Execute SQL
+    		stmt.executeUpdate();
+    	}
+    	finally {
+    		close(stmt);
+    	}
+    }
+    
     private Student convertRowToStudent(ResultSet rs) throws SQLException {
         int emplid = rs.getInt("EMPLID");
         String name = rs.getString("NAME");
@@ -113,7 +157,7 @@ public class StudentDAO extends javax.swing.JFrame {
             stmt.executeUpdate();
         }
         finally {
-            close(stmt, null);
+            close(stmt);
         }
         
     }
@@ -135,6 +179,10 @@ public class StudentDAO extends javax.swing.JFrame {
     
     private void close(Statement stmt, ResultSet rs) throws SQLException {
         close(null, stmt, rs);
+    }
+    
+    private void close(Statement stmt) throws SQLException {
+    	close(null, stmt, null);
     }
     
 //    public static void main(String[] args) throws Exception {

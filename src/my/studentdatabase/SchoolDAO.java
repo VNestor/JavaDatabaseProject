@@ -32,11 +32,9 @@ public class SchoolDAO extends javax.swing.JFrame {
         ResultSet rs = null;
         
         try {
-            System.out.println("Trying to get all schools");
             stmt = conn.createStatement();
-            System.out.print("Statement created");
+            
             rs = stmt.executeQuery("SELECT * FROM SCHOOLS");
-            System.out.print("Statement executed");
             
             while (rs.next()) {
                 School tempSchool = convertRowToSchool(rs);

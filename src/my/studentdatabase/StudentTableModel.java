@@ -13,6 +13,8 @@ import javax.swing.table.AbstractTableModel;
  * @author Victor Nestor
  */
 class StudentTableModel extends AbstractTableModel {
+	
+	public static final int OBJECT_COL = -1;
     
     private static final int EMPLID = 0;
     private static final int NAME = 1;
@@ -66,6 +68,8 @@ class StudentTableModel extends AbstractTableModel {
                 return tempStudent.getCredits();
             case GPA:
                 return tempStudent.getGPA();
+            case OBJECT_COL:
+            	return tempStudent;
             default:
                 return tempStudent.getEmplid();
         }

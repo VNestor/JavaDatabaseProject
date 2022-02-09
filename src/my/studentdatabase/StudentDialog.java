@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AddStudentDialog extends JDialog {
+public class StudentDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField emplidTextField;
@@ -32,23 +32,50 @@ public class AddStudentDialog extends JDialog {
 	
 	private StudentDatabaseUI studentDatabaseUI;
 	
-	// Constructor for when we call AddStudentDialog
+	private Student previousStudent = null;
+	private boolean updateMode = false;
 	
-	public AddStudentDialog(StudentDatabaseUI theStudentDatabaseUI, StudentDAO theStudentDAO) {
+	// Constructor for when we call StudentDialog
+	
+	public StudentDialog(StudentDatabaseUI theStudentDatabaseUI, StudentDAO theStudentDAO, Student thePreviousStudent, boolean theUpdateMode) {
 		
 		this();
 		
 		studentDAO = theStudentDAO;
 		studentDatabaseUI = theStudentDatabaseUI;
 		
+		previousStudent = thePreviousStudent;
+		
+		updateMode = theUpdateMode;
+		
+		if (updateMode) {
+			setTitle("Update Student");
+			emplidTextField.setEditable(false);
+			populateGUI(previousStudent);
+		}
+		
 	}
-
-
+	
+	private void populateGUI(Student theStudent) {
+		
+		emplidTextField.setText(String.valueOf(theStudent.getEmplid()));
+		nameTextField.setText(theStudent.getName());
+		deptnoTextField.setText(String.valueOf(theStudent.getDept()));
+		transferTextField.setText(String.valueOf(theStudent.getTransfer()));
+		statusTextField.setText(theStudent.getStatus());
+		creditsTextField.setText(String.valueOf(theStudent.getCredits()));
+		gpaTextField.setText(String.valueOf(theStudent.getGPA()));
+		
+	}
+	
+	public StudentDialog(StudentDatabaseUI theStudentDatabaseUI, StudentDAO theStudentDAO) {
+		this(theStudentDatabaseUI, theStudentDAO, null, false);
+	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public AddStudentDialog() {
+	public StudentDialog() {
 		setTitle("Add Student");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -154,19 +181,25 @@ public class AddStudentDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Save");
-				okButton.addActionListener(new ActionListener() {
+				JButton saveButton = new JButton("Save");
+				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						// Save the student
 						saveStudent();
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				saveButton.setActionCommand("OK");
+				buttonPane.add(saveButton);
+				getRootPane().setDefaultButton(saveButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						setVisible(false);
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -183,12 +216,37 @@ public class AddStudentDialog extends JDialog {
 		int credits = Integer.parseInt(creditsTextField.getText());
 		double gpa = Double.parseDouble(gpaTextField.getText());
 		
-		Student tempStudent = new Student(emplid, name, deptno, transfer, status, credits, gpa);
+		Student tempStudent = null;
+		
+		if(updateMode) {
+			tempStudent = previousStudent;
+			
+			tempStudent.setName(name);
+			tempStudent.setDept(deptno);
+			tempStudent.setTransfer(transfer);
+			tempStudent.setStatus(status);
+			tempStudent.setCredits(credits);
+			tempStudent.setGPA(gpa);
+			
+		} else {
+			
+			tempStudent = new Student(emplid, name, deptno, transfer, status, credits, gpa);
+			
+		}
+		
 		
 		try {
 			
 			// Save to the Student Database
-			studentDAO.addStudent(tempStudent);
+			if (updateMode) {
+				
+				studentDAO.updateStudent(tempStudent);
+				
+			} else {
+				
+				studentDAO.addStudent(tempStudent);	
+				
+			}
 			
 			// Close dialog
 			setVisible(false);
@@ -199,15 +257,15 @@ public class AddStudentDialog extends JDialog {
 			
 			// Show success message
 			JOptionPane.showMessageDialog(studentDatabaseUI, 
-					"Student added successfully!",
-					"Student Added",
+					"Student saved successfully!",
+					"Student saved",
 					JOptionPane.INFORMATION_MESSAGE);
 			
 			
 		} catch (Exception exc) {
 			JOptionPane.showMessageDialog(
 					studentDatabaseUI,
-					"Error saving student: " + exc.getMessage(), "\nError", JOptionPane.ERROR_MESSAGE);
+					"Error saving student: " + exc.getMessage(), "An error occured!", JOptionPane.ERROR_MESSAGE);
 		}
 			
 		

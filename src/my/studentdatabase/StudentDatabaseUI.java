@@ -32,6 +32,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
     private DepartmentDAO departmentDAO;
     private JPanel panel_1;
     private JButton btnAddStudent;
+    private JButton btnUpdateStudent;
+    private JButton btnDeleteStudent;
     
 
     /**
@@ -49,7 +51,7 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
             departmentDAO = new DepartmentDAO();
             
         } catch (Exception exc) {
-            JOptionPane.showMessageDialog(this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + exc, "An error occured!", JOptionPane.ERROR_MESSAGE);
         }
         
         setTitle("Student Database");
@@ -101,7 +103,8 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
                     
                     
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: Please enter valid EMPLID or 0 to show all students.", "\nError: ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: Please enter valid EMPLID or 0 to show all students.", 
+                    		"An error occured!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -116,21 +119,16 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
                 try {
                     
                     List<School> schools = null;
-                    System.out.println("List made");
                     
-                    System.out.println("Getting schools");
                     schools = schoolDAO.getAllSchools();
-                    System.out.println("Got schools");
                     
                     // Create the model and update the "table"
                     SchoolTableModel model = new SchoolTableModel(schools);
-                    System.out.println("Model created");
                     
                     table.setModel(model);
-                    System.out.println("Model set");
                     
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "An error occured!", JOptionPane.ERROR_MESSAGE);
                 } 
             }
             
@@ -155,7 +153,7 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
                     table.setModel(model);
                     
                 } catch (Exception exc) {
-                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error: " + exc, "An error occured!", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -179,13 +177,88 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
         btnAddStudent.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		// Create Dialog
-        		AddStudentDialog dialog = new AddStudentDialog(StudentDatabaseUI.this, studentDAO);
+        		StudentDialog dialog = new StudentDialog(StudentDatabaseUI.this, studentDAO);
         		
         		// Show Dialog
         		dialog.setVisible(true);
         	}
         });
         panel_1.add(btnAddStudent);
+        
+        btnUpdateStudent = new JButton("Update Student");
+        btnUpdateStudent.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		// Get the selected student
+        		int row = table.getSelectedRow();
+        		
+        		// Make sure a row is selected
+        		if (row < 0) {
+        			JOptionPane.showMessageDialog(StudentDatabaseUI.this, "You must select a student!",
+        					"An error occured!", JOptionPane.ERROR_MESSAGE);
+        			return;
+        			
+        		}
+        		
+        		// Get the current student
+        		Student tempStudent = (Student) table.getValueAt(row, StudentTableModel.OBJECT_COL);
+        		
+        		// Create dialog
+        		StudentDialog dialog = new StudentDialog(StudentDatabaseUI.this, studentDAO, tempStudent, true);
+        		
+        		// Show dialog
+        		dialog.setVisible(true);
+        		
+        	}
+        });
+        panel_1.add(btnUpdateStudent);
+        
+        btnDeleteStudent = new JButton("Delete Student");
+        btnDeleteStudent.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		try {
+        			
+        			// Get the selected row
+        			int row = table.getSelectedRow();
+        			
+        			// Make sure a row is selected
+        			if (row < 0) {
+        				JOptionPane.showMessageDialog(StudentDatabaseUI.this, 
+        						"You must select a student!", "An error occured!", JOptionPane.ERROR_MESSAGE);
+        				return;
+        				
+        			}
+        			
+        			// Prompt the user
+        			int response = JOptionPane.showConfirmDialog(
+        					StudentDatabaseUI.this, "Are you sure you want to delete this student?", "Confirm Student Deletion",
+        					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        			
+        			if (response != JOptionPane.YES_OPTION) {
+        				return;
+        			}
+        			
+        			// Get the current student
+        			Student tempStudent = (Student) table.getValueAt(row, StudentTableModel.OBJECT_COL);
+        			
+        			// Delete the student
+        			studentDAO.deleteStudent(tempStudent.getEmplid());
+        			
+        			// Refresh GUI
+        			refreshStudentsView();
+        			
+        			// Show success message 
+        			JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Student deleted successfully!", "Student Deleted",
+        					JOptionPane.INFORMATION_MESSAGE);
+        			
+        		} catch (Exception exc) {
+        			JOptionPane.showMessageDialog(StudentDatabaseUI.this, "Error deleting employee: " + exc.getMessage(), 
+        					"An error occured!", JOptionPane.ERROR_MESSAGE);
+        		}
+        	}
+        });
+        panel_1.add(btnDeleteStudent);
         
         
         
@@ -203,7 +276,7 @@ public class StudentDatabaseUI extends javax.swing.JFrame {
 			table.setModel(model);
 			
 		} catch (Exception exc) {
-			JOptionPane.showMessageDialog(this, "Error: " + exc, "\nError: ", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error: " + exc, "An error occured!", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

@@ -95,7 +95,7 @@ public class Student {
         return gpa;
     }
     
-    public void setGPA(){
+    public void setGPA(double gpa){
         this.gpa = gpa;
     }
     
