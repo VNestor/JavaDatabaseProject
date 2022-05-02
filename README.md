@@ -1,6 +1,6 @@
 # Student Database Project
 ## Description
-I have built this Student Database project to gain familiarity with SQL databases using Java.
+I have built this Student Database project to gain familiarity with SQL and relational databases using Java.
 It is a CRUD application that has the ability to:
 - enroll a new/transferring student into a database.
 - update a student's information.
