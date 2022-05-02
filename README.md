@@ -9,19 +9,19 @@ It is a CRUD application that has the ability to:
 ## Examples
 
 ### Searching for a student
-![Find A Student Demo](https://user-images.githubusercontent.com/37969271/166185518-ac9463a9-83c3-43ee-87e7-18ac2967cfcd.gif)
+![Find A Student Demo (1)](https://user-images.githubusercontent.com/37969271/166185931-4c5edfd8-9db0-438e-a4b7-15049b73b5ee.gif)
 
 ### Display all students
-![Show All Demo](https://user-images.githubusercontent.com/37969271/166185537-aafc88c7-8075-425a-be6d-d6af80d88a6d.gif)
+![Show All Demo (1)](https://user-images.githubusercontent.com/37969271/166186207-17cf58a4-94b8-420b-9037-7e9407ab1d7c.gif)
 
 ### Add a student
-![Add Student Demo](https://user-images.githubusercontent.com/37969271/166185552-7a84d7cb-e8ac-4af1-8dab-ade16222363f.gif)
+![Add Student Demo (1)](https://user-images.githubusercontent.com/37969271/166186214-6bf7ca5a-2a33-4436-8c35-8b71d3931823.gif)
 
 ### Update a student
-![Update Student Demo](https://user-images.githubusercontent.com/37969271/166185565-70a3b437-434d-42f8-98c2-a740e2c1f9b3.gif)
+![Update Student Demo (1)](https://user-images.githubusercontent.com/37969271/166186240-3e0999d8-07bd-4305-9e98-eff037cd9ec0.gif)
 
 ### Delete a student
-![Delete Student Demo](https://user-images.githubusercontent.com/37969271/166185577-c33f338c-bcf6-48ae-840c-b2589183ef46.gif)
+![Delete Student Demo (1)](https://user-images.githubusercontent.com/37969271/166186264-73305c19-2458-40a7-9438-b28547273480.gif)
 
 ### Show Schools and Departments
-![Show Schools and Departments](https://user-images.githubusercontent.com/37969271/166185617-fbdafb09-8f7a-4582-b3a1-00e464ffcd94.gif)
+![Show Schools and Departments (1)](https://user-images.githubusercontent.com/37969271/166186275-de771258-1157-4d77-b1a4-40f907a8e245.gif)
